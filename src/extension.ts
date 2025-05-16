@@ -49,10 +49,11 @@ export function deactivate() {
 }
 
 class Paster {
-    static PATH_VARIABLE_CURRNET_FILE_DIR = /\$\{currentFileDir\}/g;
+    static PATH_VARIABLE_CURRENT_FILE_DIR = /\$\{currentFileDir\}/g;
     static PATH_VARIABLE_PROJECT_ROOT = /\$\{projectRoot\}/g;
-    static PATH_VARIABLE_CURRNET_FILE_NAME = /\$\{currentFileName\}/g;
-    static PATH_VARIABLE_CURRNET_FILE_NAME_WITHOUT_EXT = /\$\{currentFileNameWithoutExt\}/g;
+    static PATH_VARIABLE_CURRENT_FILE_NAME = /\$\{currentFileName\}/g;
+    static PATH_VARIABLE_CURRENT_FILE_NAME_WITHOUT_EXT = /\$\{currentFileNameWithoutExt\}/g;
+    static PATH_VARIABLE_RELATIVE_DIR = /\$\{relativeDir\}/g; // New variable
 
     static PATH_VARIABLE_IMAGE_FILE_PATH = /\$\{imageFilePath\}/g;
     static PATH_VARIABLE_IMAGE_ORIGINAL_FILE_PATH = /\$\{imageOriginalFilePath\}/g;
@@ -417,12 +418,17 @@ class Paster {
         let fileName = path.basename(curFilePath);
         let fileNameWithoutExt = path.basename(curFilePath, ext);
 
+        // Calculate relative directory
+        let relativeDir = path.relative(projectRoot, currentFileDir);
+
         pathStr = pathStr.replace(this.PATH_VARIABLE_PROJECT_ROOT, postFunction(projectRoot));
-        pathStr = pathStr.replace(this.PATH_VARIABLE_CURRNET_FILE_DIR, postFunction(currentFileDir));
-        pathStr = pathStr.replace(this.PATH_VARIABLE_CURRNET_FILE_NAME, postFunction(fileName));
-        pathStr = pathStr.replace(this.PATH_VARIABLE_CURRNET_FILE_NAME_WITHOUT_EXT, postFunction(fileNameWithoutExt));
+        pathStr = pathStr.replace(this.PATH_VARIABLE_CURRENT_FILE_DIR, postFunction(currentFileDir));
+        pathStr = pathStr.replace(this.PATH_VARIABLE_CURRENT_FILE_NAME, postFunction(fileName));
+        pathStr = pathStr.replace(this.PATH_VARIABLE_CURRENT_FILE_NAME_WITHOUT_EXT, postFunction(fileNameWithoutExt));
+        pathStr = pathStr.replace(this.PATH_VARIABLE_RELATIVE_DIR, postFunction(relativeDir)); // Replace relativeDir
         return pathStr;
     }
+
 }
 
 class PluginError {
