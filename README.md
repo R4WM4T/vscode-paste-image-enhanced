@@ -1,6 +1,7 @@
 # Paste Image
 
 Paste image directly from clipboard to markdown/asciidoc(or other file)!
+Fork -> Adding relative path variable
 
 **Support Mac/Windows/Linux!** And support config destination folder.
 
